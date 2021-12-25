@@ -1,0 +1,14 @@
+.pro-sidebar > .pro-sidebar-inner {
+  background: #2f4f4f !important;
+  height: 100% !important;
+}
+
+.pro-sidebar .pro-menu .pro-menu-item {
+  font-size: 14px !important;
+}
+
+@media only screen and (min-width: 300px) and (max-width: 1000px) {
+  .sidebar_in_mobile_view {
+    display: none !important;
+  }
+}

@@ -1,0 +1,33 @@
+.add_button {
+  background-color: #48c28d !important;
+  color: #fff !important;
+  display: inline-block;
+  font-size: 16px;
+  padding: 8px 25px;
+  text-align: center;
+  text-transform: capitalize !important;
+  cursor: pointer;
+  border: 1px solid transparent;
+  outline: none !important;
+  text-decoration: none !important;
+}
+
+.text_feild_heading {
+  font-size: 15px;
+  font-weight: 600;
+}
+.Form_heading {
+  font-weight: 700;
+  line-height: 1.2;
+  color: inherit;
+  font-size: 1.5rem;
+}
+.table_width {
+  width: 100%;
+}
+
+@media only screen and (min-width: 300px) and (max-width: 650px) {
+  .table_in_mobile {
+    overflow-x: scroll !important;
+  }
+}

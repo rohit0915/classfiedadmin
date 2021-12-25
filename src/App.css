@@ -1,0 +1,180 @@
+.pro-sidebar .pro-menu {
+  padding-top: 95px !important;
+  padding-bottom: 10px !important;
+}
+
+/* App.css file contains some common Css for whole Components */
+
+/* Component_main_grid(class) is a common for those component in which material grid is using this make the component 
+responsive to mobile view on various screen width as below */
+
+.Component_main_grid {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+/*content_padding is used for padding from top from header*/
+.content_padding {
+  padding-top: 8%;
+}
+
+.page_heading {
+  color: black;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.Page_image {
+  width: 90%;
+}
+
+/* for border of cards*/
+.Card_shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  border-radius: 8px !important;
+}
+
+.hover_cursor {
+  cursor: pointer;
+}
+
+.input_heading {
+  color: black !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+.table_header {
+  color: black !important;
+  font-weight: bold !important;
+  background-color: white !important;
+}
+.table_foramtitng {
+  border: 1px solid gray;
+}
+.MuiFormControl-root {
+  width: 100% !important;
+}
+
+.react-tel-input .form-control {
+  width: 100% !important;
+  padding-top: 30px !important;
+  padding-bottom: 25px !important;
+}
+.react-tel-input .country-list .country {
+  text-align: left !important;
+}
+.button_login_decoration {
+  text-decoration: none !important;
+  outline: none !important;
+}
+
+.leftside {
+  width: 130px;
+  height: auto !important;
+  overflow: hidden !important;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.leftside a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #2196f3;
+  display: block;
+}
+
+.leftside a:hover {
+  color: #064579;
+}
+
+.main {
+  margin-left: 140px; /* Same width as the sidebar + left position in px */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+  overflow: scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 25px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* border color for blank textfeild*/
+.invalid {
+  border: 1px solid #d9534f;
+}
+
+@media screen and (max-height: 450px) {
+  .leftside {
+    padding-top: 15px;
+  }
+  .leftside a {
+    font-size: 18px;
+  }
+}
+
+.Page_width {
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+/* for mobile view */
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .Component_main_grid {
+    width: 100%;
+    height: auto;
+    display: block;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+  }
+  .content_padding {
+    padding-top: 20%;
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+}
+
+/* for mobile view */
+@media only screen and (min-width: 481px) and (max-width: 800px) {
+  .Component_main_grid {
+    width: 100%;
+    height: auto;
+    display: block;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+  }
+  .content_padding {
+    padding-top: 16%;
+  }
+}
+
+/* for mobile view */
+@media only screen and (min-width: 801px) and (max-width: 960px) {
+  .Component_main_grid {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: initial;
+    box-sizing: border-box;
+  }
+}

@@ -1,0 +1,199 @@
+.MuiPaper-elevation4 {
+  box-shadow: none !important;
+}
+.MainHeader {
+  background-color: #2f4f4f !important;
+}
+.header_padding {
+  width: 100%;
+  padding-right: 3% !important;
+  padding-left: 3% !important;
+  margin-right: auto;
+  margin-left: auto;
+}
+.header_grow {
+  flex-grow: 1 !important;
+}
+.header_links {
+  display: flex;
+  justify-content: space-between !important;
+}
+.header_link_color {
+  font-style: normal;
+  font-size: 12px;
+  line-height: 28px;
+  color: #fff;
+  cursor: pointer;
+  padding: 0 17px;
+  letter-spacing: 0.5px;
+}
+
+.header_link_color:hover {
+  opacity: 0.7;
+}
+
+.get_fit_button {
+  border: 1px solid #84b140 !important;
+  background: 0 0 !important;
+  border-radius: 4px !important;
+  padding: 5px 20px;
+  outline: none !important;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 22px;
+  text-align: center;
+  font-feature-settings: "salt" on, "liga" off;
+  color: #84b140;
+}
+
+.toggle_button {
+  color: #fff !important;
+  outline: none !important;
+  background-color: #84b140 !important;
+  padding: 5px 20px !important;
+  font-size: 23px !important;
+}
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1320;
+  top: 0;
+  left: 0;
+  background-color: #2f4f4f;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.sidenav span {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+  text-align: left !important;
+}
+
+.sidenav span:hover {
+  opacity: 0.7;
+}
+
+.cross_icon_style {
+  text-align: right !important;
+  color: #fff;
+  margin-right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.logout_Pointer_cursor {
+  cursor: pointer !important;
+}
+.mobile_Burger_Menu {
+  display: none;
+}
+#mySidenav {
+  display: none;
+}
+
+.MuiAppBar-root {
+  width: 100%;
+  display: flex;
+  z-index: 1076;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+.toggle_button_sidebar {
+  color: #fff !important;
+  cursor: pointer;
+}
+
+.userproile{
+  background-color: #fff;
+  color: #000;
+  border-radius: 50%;
+}
+.logo_font {
+  font-size: 20px;
+}
+@media (min-width: 768px) {
+  .animate {
+    animation-duration: 0.3s;
+    -webkit-animation-duration: 0.3s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+  }
+}
+
+@keyframes slideIn {
+  20% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+
+  20% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes slideIn {
+  20% {
+    -webkit-transform: transform;
+    -webkit-opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+    -webkit-opacity: 1;
+  }
+
+  20% {
+    -webkit-transform: translateY(1rem);
+    -webkit-opacity: 0;
+  }
+}
+
+.slideIn {
+  -webkit-animation-name: slideIn;
+  animation-name: slideIn;
+}
+
+.dopdown_formatting {
+  margin-top: 39px !important;
+  margin-left: -250px !important;
+  width: 280px;
+}
+.dropdownLinks {
+  font-size: 18px;
+}
+
+.dropdownLinks:hover {
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 300px) and (max-width: 1000px) {
+  .header_links {
+    display: none;
+  }
+  #mySidenav {
+    display: block;
+  }
+  .mobile_Burger_Menu {
+    display: block;
+    color: #fff !important;
+    font-size: 14px;
+  }
+  .toggle_button_sidebar {
+    display: none;
+  }
+}

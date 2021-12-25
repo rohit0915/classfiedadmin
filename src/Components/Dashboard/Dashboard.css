@@ -1,0 +1,12 @@
+.Content_topHeading {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+.sub_content {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.card_height {
+  height: 500px;
+  width: 100%;
+}
