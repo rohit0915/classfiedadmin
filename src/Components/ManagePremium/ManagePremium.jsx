@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HOC from "../../Common/HOC.jsx"
 import Expand from 'react-expand-animated';
 
@@ -16,20 +16,65 @@ import TablePagination from "@material-ui/core/TablePagination";
 
 import { useNavigate } from 'react-router-dom';
 
+
+//for API Call
+import { getBaseUrl } from "../../utils";
+import axios from "axios";
+import Loder from "../../Loder/Loder";
+import { blankValidator, emailValidator, showNotificationMsz } from "../../utils/Validation";
+
 function ManagePremium(props) {
 
     const navigate = useNavigate();
     const classes = useStyles();
 
-    const filterData = [{
-        name: "ujjawal"
-    }];
+    //local state
+    const [AddPremium, setAddPremium] = useState(false)
+    const [PremiumArr, setPremiumArr] = useState([])
+    const [isloading, setisloading] = useState(false)
+    const [premiumname, setpremiumname] = useState("");
+    const [isUpdated, setisUpdated] = useState(false);
+    const [premiumimage, setpremiumimage] = useState(false)
+    const [price, setprice] = useState("");
+    const [days, setdays] = useState("")
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+
+        const getUserDetails = () => {
+            try {
+                setisloading(true);
+                let url = getBaseUrl() + "api/v1/premium/getallpremium";
+                axios.get(url, {
+                    headers: {
+                        token: `Bearer ${localStorage.getItem("accessToken")}`
+                    }
+                }).then(
+                    (res) => {
+                        console.log("res::", res);
+                        setPremiumArr(res.data.data)
+                        setisloading(false);
+                    },
+                    (error) => {
+                        showNotificationMsz(`${error}`, "danger");
+                        console.log("data response error:::", error);
+                        setisloading(false);
+                    }
+                );
+            } catch (error) {
+                showNotificationMsz(`${error}`, "danger");
+                setisloading(false);
+                console.log("data response error:::", error);
+            }
+        };
+        getUserDetails();
+    }, [isUpdated])
 
     // for pagination hadler 
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
 
-    const [AddPremium, setAddPremium] = useState(false)
+
 
     const handleChangePage = (event, newPage) => {
         window.scrollTo(0, 0);
@@ -40,6 +85,40 @@ function ManagePremium(props) {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
+    const AddPremiumdata = () => {
+        try {
+            setisloading(true)
+            let url = getBaseUrl() + "api/v1/premium/AddPremiumcategory";
+
+            let fd = new FormData();
+            fd.append("premiumimage", premiumimage);
+            fd.append("premiumname", premiumname);
+            fd.append("price", price);
+            fd.append("validity", days)
+            axios
+                .post(url, fd)
+                .then(
+                    (res) => {
+                        console.log("add res", res)
+                        showNotificationMsz(res.data.message, "success")
+                        setisUpdated(!isUpdated)
+                        setAddPremium(!AddPremium)
+                        setisloading(false)
+                    },
+                    (error) => {
+                        showNotificationMsz(`${error}`, "danger")
+                        console.log("data response error:::", error)
+                        setisloading(false)
+                    }
+                )
+        } catch (error) {
+            showNotificationMsz(`${error}`, "danger")
+            setisloading(false)
+            console.log("data response error:::", error)
+        }
+
+    }
 
     return (
         <>
@@ -61,6 +140,10 @@ function ManagePremium(props) {
                                     type="text"
                                     placeholder="Enter Premium Name"
                                     className="form-control"
+                                    value={premiumname}
+                                    onChange={(e) => {
+                                        setpremiumname(e.target.value)
+                                    }}
                                 />
                             </div>
 
@@ -70,6 +153,10 @@ function ManagePremium(props) {
                                     type="text"
                                     placeholder="Enter Price"
                                     className="form-control"
+                                    value={price}
+                                    onChange={(e) => {
+                                        setprice(e.target.value)
+                                    }}
                                 />
                             </div>
 
@@ -79,16 +166,31 @@ function ManagePremium(props) {
                                     type="text"
                                     placeholder="Enter validity"
                                     className="form-control"
+                                    value={days}
+                                    onChange={(e) => {
+                                        setdays(e.target.value)
+                                    }}
+                                />
+                            </div>
+
+                            <div className='text_feild_heading mt-2'>Premium Image</div>
+                            <div>
+                                <input
+                                    type="file"
+                                    className="form-control"
+                                    onChange={(e) => {
+                                        setpremiumimage(e.target.files[0])
+                                    }}
                                 />
                             </div>
 
                             <div className='mt-2 mb-2'>
-                                <Button className='add_button'>Add</Button>
+                                <Button className='add_button' onClick={AddPremiumdata}>Add</Button>
                             </div>
                         </Card>
                     </Expand>
                     <div className="mb-3">
-                        <Card className="p-2 Card_shadow mt-2 card_height">
+                        <Card className="p-2 Card_shadow mt-2">
 
                             <Grid className="Component_main_grid">
                                 <Grid item md={3} className="p-2">
@@ -139,33 +241,33 @@ function ManagePremium(props) {
                                     </TableHead>
                                     <TableBody>
                                         {(rowsPerPage > 0
-                                            ? filterData.slice(
+                                            ? PremiumArr.slice(
                                                 page * rowsPerPage,
                                                 page * rowsPerPage +
                                                 rowsPerPage
                                             )
-                                            : filterData
+                                            : PremiumArr
                                         ).map((row) => (
                                             <StyledTableRow>
 
                                                 <StyledTableCell
                                                     align="left"
                                                 >
-                                                    {row.name}
+                                                    {row.premiumname}
                                                 </StyledTableCell>
 
                                                 <StyledTableCell
                                                     align="left"
-                                                   
-                                                >
 
+                                                >
+                                                    {row.price}
                                                 </StyledTableCell>
 
                                                 <StyledTableCell
                                                     align="left"
-                                                  
-                                                >
 
+                                                >
+                                                    {row.validity}
                                                 </StyledTableCell>
                                                 <StyledTableCell
                                                     align="left"
@@ -189,7 +291,7 @@ function ManagePremium(props) {
                                     true
                                     rowsPerPageOptions={false}
                                     component="div"
-                                    count={filterData.length}
+                                    count={PremiumArr.length}
                                     rowsPerPage={rowsPerPage}
                                     page={page}
                                     onChangePage={handleChangePage}
@@ -203,6 +305,9 @@ function ManagePremium(props) {
                 </div>
 
             </div>
+
+            <Loder loading={isloading} />
+
         </>
     )
 }

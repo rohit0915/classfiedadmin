@@ -38,6 +38,8 @@ function ManageCategory(props) {
     //errors
     const [categoryNameError, setcategoryNameError] = useState(false)
     const [CategoryImageError, setCategoryImageError] = useState(false)
+    const [EditcategoryNameError, setEditcategoryNameError] = useState(false)
+    const [EditCategoryImageError, setEditCategoryImageError] = useState(false)
 
     const navigate = useNavigate();
     const classes = useStyles();
@@ -175,6 +177,14 @@ function ManageCategory(props) {
     const HandleEditCategoryData = (ID) => {
         let id = ID
         try {
+            if (!blankValidator(EditCategoryName)) {
+                setEditcategoryNameError(true);
+                return
+            }
+            if (!blankValidator(EditCategoryImage)) {
+                setEditCategoryImageError(true);
+                return
+            }
             setisloading(true)
             let url = getBaseUrl() + `api/v1/category/editcategory/${id}`;
 
@@ -332,7 +342,7 @@ function ManageCategory(props) {
                                                             <i className='fa fa-trash' onClick={() => DeleteCategory(row._id)} />
                                                         </span>
 
-                                                        <span className='ml-5 text-info hover_cursor' onClick={() => navigate("/manage-sub-category")}>
+                                                        <span className='ml-5 text-info hover_cursor' onClick={() => navigate("/manage-sub-category", { state: row })}>
                                                             Manage Subcategory
                                                         </span>
                                                     </div>
@@ -386,9 +396,13 @@ function ManageCategory(props) {
                             className="form-control"
                             value={EditCategoryName}
                             onChange={(e) => {
+                                setEditcategoryNameError(false)
                                 setEditCategoryName(e.target.value)
                             }}
                         />
+                        {EditcategoryNameError && (
+                            <span className="text-danger">Enter Category Name</span>
+                        )}
                     </div>
 
                     <div className='text_feild_heading mt-2'>Image</div>
@@ -397,21 +411,25 @@ function ManageCategory(props) {
                             type="file"
                             className="form-control"
                             onChange={(e) => {
+                                setEditCategoryImageError(false)
                                 setEditCategoryImage(e.target.files[0])
                             }}
                         />
+                        {EditCategoryImageError && (
+                            <span className="text-danger">Choose the Category Image</span>
+                        )}
                     </div>
 
                 </DialogContent>
                 <DialogActions>
                     <Button
-                        className="button_formatting"
+                        className="add_button"
                         onClick={() => setEditDailogOpen(!EditDailogOpen)}
                     >
                         Cancel
                     </Button>
                     <Button
-                        className="button_formatting"
+                        className="add_button"
                         onClick={() => HandleEditCategoryData(EditID)}
                     >
                         Save{" "}
