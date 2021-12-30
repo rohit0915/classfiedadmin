@@ -29,6 +29,7 @@ function ManageCategory(props) {
     const [CategoryDataArr, setCategoryDataArr] = useState([])
     const [isloading, setisloading] = useState(false)
     const [isUpdated, setisUpdated] = useState(false)
+    const [name, setname] = useState("")
 
     const [EditDailogOpen, setEditDailogOpen] = useState(false)
     const [EditCategoryName, setEditCategoryName] = useState("")
@@ -216,6 +217,12 @@ function ManageCategory(props) {
         }
 
     }
+
+    const filterCategoryDataArr = CategoryDataArr.filter((event) => {
+        return (
+            event.categoryname.toLowerCase().indexOf(name.toLowerCase()) !== -1
+        );
+    });
     return (
         <>
             <div className="Page_width content_padding" >
@@ -276,6 +283,10 @@ function ManageCategory(props) {
                                         type="text"
                                         placeholder="Search by Category Name"
                                         className="form-control"
+                                        value={name}
+                                        onChange={(e) => {
+                                            setname(e.target.value)
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item md={9} className="p-3"></Grid>
@@ -312,12 +323,12 @@ function ManageCategory(props) {
                                     </TableHead>
                                     <TableBody>
                                         {(rowsPerPage > 0
-                                            ? CategoryDataArr.slice(
+                                            ? filterCategoryDataArr.slice(
                                                 page * rowsPerPage,
                                                 page * rowsPerPage +
                                                 rowsPerPage
                                             )
-                                            : CategoryDataArr
+                                            : filterCategoryDataArr
                                         ).map((row) => (
                                             <StyledTableRow>
                                                 <StyledTableCell
@@ -356,7 +367,7 @@ function ManageCategory(props) {
                                     true
                                     rowsPerPageOptions={false}
                                     component="div"
-                                    count={CategoryDataArr.length}
+                                    count={filterCategoryDataArr.length}
                                     rowsPerPage={rowsPerPage}
                                     page={page}
                                     onChangePage={handleChangePage}

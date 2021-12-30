@@ -23,20 +23,17 @@ import axios from "axios";
 import Loder from "../../Loder/Loder";
 import { blankValidator, emailValidator, showNotificationMsz } from "../../utils/Validation";
 
-function ManagePremium(props) {
+function ManageAdverts(props) {
 
     const navigate = useNavigate();
     const classes = useStyles();
 
     //local state
-    const [AddPremium, setAddPremium] = useState(false)
-    const [PremiumArr, setPremiumArr] = useState([])
+
+    const [AdvertsArr, setAdvertsArr] = useState([])
     const [isloading, setisloading] = useState(false)
-    const [premiumname, setpremiumname] = useState("");
-    const [isUpdated, setisUpdated] = useState(false);
-    const [premiumimage, setpremiumimage] = useState(false)
-    const [price, setprice] = useState("");
-    const [days, setdays] = useState("")
+    const [isUpdated, setisUpdated] = useState(false)
+    const [name, setname] = useState("")
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -44,7 +41,7 @@ function ManagePremium(props) {
         const getUserDetails = () => {
             try {
                 setisloading(true);
-                let url = getBaseUrl() + "api/v1/premium/getallpremium";
+                let url = getBaseUrl() + "api/v1/advert/getalladvert";
                 axios.get(url, {
                     headers: {
                         token: `Bearer ${localStorage.getItem("accessToken")}`
@@ -52,7 +49,7 @@ function ManagePremium(props) {
                 }).then(
                     (res) => {
                         console.log("res::", res);
-                        setPremiumArr(res.data.data)
+                        setAdvertsArr(res.data.data.data)
                         setisloading(false);
                     },
                     (error) => {
@@ -74,8 +71,6 @@ function ManagePremium(props) {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
 
-
-
     const handleChangePage = (event, newPage) => {
         window.scrollTo(0, 0);
         setPage(newPage);
@@ -86,47 +81,14 @@ function ManagePremium(props) {
         setPage(0);
     };
 
-    const AddPremiumdata = () => {
-        try {
-            setisloading(true)
-            let url = getBaseUrl() + "api/v1/premium/AddPremiumcategory";
-
-            let fd = new FormData();
-            fd.append("premiumimage", premiumimage);
-            fd.append("premiumname", premiumname);
-            fd.append("price", price);
-            fd.append("validity", days)
-            axios
-                .post(url, fd)
-                .then(
-                    (res) => {
-                        console.log("add res", res)
-                        showNotificationMsz(res.data.message, "success")
-                        setisUpdated(!isUpdated)
-                        setAddPremium(!AddPremium)
-                        setisloading(false)
-                    },
-                    (error) => {
-                        showNotificationMsz(`${error}`, "danger")
-                        console.log("data response error:::", error)
-                        setisloading(false)
-                    }
-                )
-        } catch (error) {
-            showNotificationMsz(`${error}`, "danger")
-            setisloading(false)
-            console.log("data response error:::", error)
-        }
-    }
-
-    //to delete Premium
-    const DeletePremium = (ID) => {
+    //to delete advert
+    const DeleteAdvertData = (ID) => {
         //delete Id
         let id = ID
 
         try {
             setisloading(true)
-            let url = getBaseUrl() + `api/v1/premium/deletepremium/${id}`;
+            let url = getBaseUrl() + `api/v1/advert/deleteadvert/${id}`;
             axios
                 .delete(url)
                 .then(
@@ -149,75 +111,23 @@ function ManagePremium(props) {
         }
     }
 
+    const filterAdvertsArr = AdvertsArr.filter((event) => {
+        return (
+            event.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
+        );
+    });
+
     return (
         <>
             <div className="Page_width content_padding" >
                 <div className="ml-3 mr-3">
                     <div className="Content_topHeading">
-                        Manage Premium
+                        Manage Adverts
                     </div>
                     <hr />
 
-                    <div className="text-center sub_content mt-3 mb-2">Premium List</div>
-                    <div ><span className="hover_cursor" onClick={() => setAddPremium(!AddPremium)}><i className='fa fa-plus-circle mr-1' />Add Premium</span></div>
+                    <div className="text-center sub_content mt-3 mb-2">Manage Adverts</div>
 
-                    <Expand open={AddPremium}>
-                        <Card className="p-2 Card_shadow mt-2">
-                            <div className='text_feild_heading'>Premium Name</div>
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="Enter Premium Name"
-                                    className="form-control"
-                                    value={premiumname}
-                                    onChange={(e) => {
-                                        setpremiumname(e.target.value)
-                                    }}
-                                />
-                            </div>
-
-                            <div className='text_feild_heading mt-2'>Price</div>
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="Enter Price"
-                                    className="form-control"
-                                    value={price}
-                                    onChange={(e) => {
-                                        setprice(e.target.value)
-                                    }}
-                                />
-                            </div>
-
-                            <div className='text_feild_heading mt-2'>Validity</div>
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="Enter validity"
-                                    className="form-control"
-                                    value={days}
-                                    onChange={(e) => {
-                                        setdays(e.target.value)
-                                    }}
-                                />
-                            </div>
-
-                            <div className='text_feild_heading mt-2'>Premium Image</div>
-                            <div>
-                                <input
-                                    type="file"
-                                    className="form-control"
-                                    onChange={(e) => {
-                                        setpremiumimage(e.target.files[0])
-                                    }}
-                                />
-                            </div>
-
-                            <div className='mt-2 mb-2'>
-                                <Button className='add_button' onClick={AddPremiumdata}>Add</Button>
-                            </div>
-                        </Card>
-                    </Expand>
                     <div className="mb-3">
                         <Card className="p-2 Card_shadow mt-2">
 
@@ -225,8 +135,12 @@ function ManagePremium(props) {
                                 <Grid item md={3} className="p-2">
                                     <input
                                         type="text"
-                                        placeholder="Search by Premium Name"
+                                        placeholder="Search by Name"
                                         className="form-control"
+                                        value={name}
+                                        onChange={(e) => {
+                                            setname(e.target.value)
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item md={9} className="p-3"></Grid>
@@ -243,21 +157,34 @@ function ManagePremium(props) {
                                                 align="left"
                                                 className="table_header"
                                             >
-                                                Premium Name
+                                                Name
                                             </StyledTableCell>
 
                                             <StyledTableCell
                                                 align="left"
                                                 className="table_header"
                                             >
-                                                Price
+                                                Title
                                             </StyledTableCell>
 
                                             <StyledTableCell
                                                 align="left"
                                                 className="table_header"
                                             >
-                                                Validity
+                                                Description
+                                            </StyledTableCell>
+
+                                            <StyledTableCell
+                                                align="left"
+                                                className="table_header"
+                                            >
+                                                Number
+                                            </StyledTableCell>
+                                            <StyledTableCell
+                                                align="left"
+                                                className="table_header"
+                                            >
+                                                Plan
                                             </StyledTableCell>
 
                                             <StyledTableCell
@@ -270,41 +197,51 @@ function ManagePremium(props) {
                                     </TableHead>
                                     <TableBody>
                                         {(rowsPerPage > 0
-                                            ? PremiumArr.slice(
+                                            ? filterAdvertsArr.slice(
                                                 page * rowsPerPage,
                                                 page * rowsPerPage +
                                                 rowsPerPage
                                             )
-                                            : PremiumArr
+                                            : filterAdvertsArr
                                         ).map((row) => (
                                             <StyledTableRow>
 
                                                 <StyledTableCell
                                                     align="left"
                                                 >
-                                                    {row.premiumname}
+                                                    {row.name}
                                                 </StyledTableCell>
 
                                                 <StyledTableCell
                                                     align="left"
-
                                                 >
-                                                    {row.price}
+                                                    {row.title}
                                                 </StyledTableCell>
 
                                                 <StyledTableCell
                                                     align="left"
-
                                                 >
-                                                    {row.validity}
+                                                    {row.description}
+                                                </StyledTableCell>
+
+                                                <StyledTableCell
+                                                    align="left"
+                                                >
+                                                    {row.number}
+                                                </StyledTableCell>
+
+                                                <StyledTableCell
+                                                    align="left"
+                                                >
+                                                    {row.plan}
                                                 </StyledTableCell>
                                                 <StyledTableCell
                                                     align="left"
                                                 >
                                                     <div>
-                                                       
-                                                        <span className=' text-info hover_cursor'>
-                                                            <i className='fa fa-trash' onClick={()=>DeletePremium(row._id)} />
+
+                                                        <span className='text-info hover_cursor'>
+                                                            <i className='fa fa-trash' onClick={() => DeleteAdvertData(row._id)} />
                                                         </span>
 
                                                     </div>
@@ -318,7 +255,7 @@ function ManagePremium(props) {
                                     true
                                     rowsPerPageOptions={false}
                                     component="div"
-                                    count={PremiumArr.length}
+                                    count={filterAdvertsArr.length}
                                     rowsPerPage={rowsPerPage}
                                     page={page}
                                     onChangePage={handleChangePage}
@@ -364,4 +301,4 @@ const useStyles = makeStyles({
 
 });
 
-export default HOC(ManagePremium)
+export default HOC(ManageAdverts)

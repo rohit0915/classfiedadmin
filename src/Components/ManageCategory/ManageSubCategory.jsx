@@ -35,6 +35,7 @@ function ManageSubCategory(props) {
     const [CategoryDataArr, setCategoryDataArr] = useState([])
     const [isloading, setisloading] = useState(false)
     const [isUpdated, setisUpdated] = useState(false)
+    const [name, setname] = useState("")
 
     const [EditDailogOpen, setEditDailogOpen] = useState(false)
     const [EditsubCategoryName, setEditsubCategoryName] = useState("")
@@ -228,6 +229,12 @@ function ManageSubCategory(props) {
         }
 
     }
+
+    const filterCategoryDataArr = CategoryDataArr.filter((event) => {
+        return (
+            event.subcategoryname.toLowerCase().indexOf(name.toLowerCase()) !== -1
+        );
+    });
     return (
         <>
             <div className="Page_width content_padding" >
@@ -299,6 +306,10 @@ function ManageSubCategory(props) {
                                         type="text"
                                         placeholder="Search by sub-Category Name"
                                         className="form-control"
+                                        value={name}
+                                        onChange={(e) => {
+                                            setname(e.target.value)
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item md={9} className="p-3"></Grid>
@@ -335,12 +346,12 @@ function ManageSubCategory(props) {
                                     </TableHead>
                                     <TableBody>
                                         {(rowsPerPage > 0
-                                            ? CategoryDataArr.slice(
+                                            ? filterCategoryDataArr.slice(
                                                 page * rowsPerPage,
                                                 page * rowsPerPage +
                                                 rowsPerPage
                                             )
-                                            : CategoryDataArr
+                                            : filterCategoryDataArr
                                         ).map((row) => (
                                             <StyledTableRow>
                                                 <StyledTableCell
@@ -376,7 +387,7 @@ function ManageSubCategory(props) {
                                     true
                                     rowsPerPageOptions={false}
                                     component="div"
-                                    count={CategoryDataArr.length}
+                                    count={filterCategoryDataArr.length}
                                     rowsPerPage={rowsPerPage}
                                     page={page}
                                     onChangePage={handleChangePage}

@@ -10,6 +10,8 @@ import ManagePremium from "./Components/ManagePremium/ManagePremium";
 //for notification
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
+import ManageUserList from "./Components/ManageUser/ManageUserList";
+import ManageAdverts from "./Components/ManageAdverts/ManageAdverts";
 
 function App() {
   let isAuth = localStorage.getItem("isAuth");
@@ -26,6 +28,12 @@ function App() {
 
         {/* maange Premium */}
         <Route path="/manage-premium" element={<ManagePremium />} />
+
+        {/* maange User */}
+        <Route path="/manage-user" element={<ManageUserList />} />
+
+        {/* maange Adverts */}
+        <Route path="/manage-adverts" element={<ManageAdverts />} />
 
         {/*Manage Password */}
         <Route path="/change-password" element={<ChangePassword />} />

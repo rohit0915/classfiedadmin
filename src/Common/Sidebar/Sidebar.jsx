@@ -4,7 +4,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 import {
     faFile,
     faLaptopHouse,
-    faPeopleArrows,
+    faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Sidebar.css";
@@ -28,6 +28,14 @@ const Sidebar = (props) => {
 
                         <MenuItem icon={<FontAwesomeIcon icon={faFile} />} onClick={() => navigate("/manage-premium")}>
                             Manage Premium
+                        </MenuItem>
+
+                        <MenuItem icon={<FontAwesomeIcon icon={faUser} />} onClick={() => navigate("/manage-user")}>
+                            Manage User
+                        </MenuItem>
+
+                        <MenuItem icon={<FontAwesomeIcon icon={faFile} />} onClick={() => navigate("/manage-adverts")}>
+                            Manage Adverts
                         </MenuItem>
 
                     </Menu>
